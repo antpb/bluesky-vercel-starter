@@ -13,13 +13,11 @@ export default async function handler(req, res) {
       },
 	 });
 
-	console.log('Received data:', req.body);
 	const { username, password, post } = req.body;
 
 	try {
 
 		const login = await agent.login({ identifier: username, password: password });
-		console.log("login", login)
 		const result = await agent.post({
       		text: post
     	});
