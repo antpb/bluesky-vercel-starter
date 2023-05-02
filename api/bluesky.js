@@ -1,25 +1,32 @@
 // api/bluesky.js
 import { BskyAgent } from '@atproto/api';
 
-const SERVICE_URL = 'https://example.com'; // Replace with the base URI of the Bluesky API
-
 export default async function handler(req, res) {
+
   if (req.method !== 'POST') {
     return res.status(405).send('Method not allowed');
   }
+    const agent = new BskyAgent({ 
+		service: "https://bsky.social/",
+		persistSession: (evt, sess) => {
+        // You can save the session data to a variable or other storage here.
+      },
+	 });
 
-  try {
-    const { username, password, post } = JSON.parse(req.body);
+	console.log('Received data:', req.body);
+	const { username, password, post } = req.body;
 
-    const agent = new BskyAgent({ service: SERVICE_URL });
+	try {
 
-    await agent.login({ identifier: username, password });
+		const login = await agent.login({ identifier: username, password: password });
+		console.log("login", login)
+		const result = await agent.post({
+      		text: post
+    	});
 
-    const result = await agent.post(post);
 
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(500).send(`Error: ${error.message}`);
-  }
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(500).send(`Error: ${error.message}`);
+	}
 }
-
