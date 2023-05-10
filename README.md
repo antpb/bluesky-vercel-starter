@@ -10,7 +10,7 @@ Before you can deploy this project, you'll need to create an account on [Vercel]
 
 1. Clone this repository:
 
-`git clone https://github.com/YOUR-USERNAME/bluesky-vercel-starter.git`
+`git clone https://github.com/antpb/bluesky-vercel-starter.git`
 
 2. Change into the project directory:
 
